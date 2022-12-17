@@ -55,7 +55,7 @@ const blackFirstBoard = (height, width) => {
     let counter = 0;
     for(let i=height;i<height+8;i++){
         for(let j=width;j<width+8;j++){
-            if(input[i][j] !== whiteFirst[i-height][j-width])counter++;
+            if(input[i][j] !== blackFirst[i-height][j-width])counter++;
         }
     }
     return counter;
@@ -68,7 +68,7 @@ const blackFirstBoard = (height, width) => {
 for(let i =0; i+7<height;i++){
     for(let j=0; j+7<width;j++){
         minArr.push(whiteFirstBoard(i,j));
-        minArr.push(blackFirstBoard(i,j))
+        minArr.push(blackFirstBoard(i,j));
     }
 }
 
