@@ -5,31 +5,33 @@ const primaryArr = input
   .shift()
   .split(" ")
   .map((n) => Number(n));
-// 1은 소수가 아니고 이를 포함하는 객체 생성
-const notPrime = { 1: true };
-// 아리스토텔리스의 체 사용
-//전체 반복 범위를 가장 큰 값의 루트까지만 진행해도 무관
-//배수는 소수가 아니기 때문
-let checkNum = 2;
-let maxNum = Math.max(...primaryArr);
-let maxSqrt = Math.ceil(Math.sqrt(maxNum));
-while (checkNum <= maxSqrt) {
-  if (notPrime[checkNum]) continue;
+// 소수 판별 함수
+const primaryCheck = (n) => {
+  // 1은 소수 아니라 바로 판별
+  if (n == 1) {
+    return false;
+  }
+  // 나머지 경우 구하기
+  let check = 2;
+  // 루트 값을 구해, 탐색 범위 줄이기
+  //배수가 있으면 소수가 아니기 때문에 루트로 줄이기(인수 구하는 느낌)
+  while (check <= Math.sqrt(n)) {
+    // 구하려는 값을 check(인수?)로 나눴을 때
+    //0이라면 당연히 소수가 아님(나누어 떨어진다는 건 배수이기 때문)
+    if (n % check === 0) return false;
+    check++;
+  }
+  return true;
+};
 
-  //원래의 범위까지 현재 수의 배수들은 다 소수가 아님
-  //소수 아님을 적용하는 부분
-  let primeChk = checkNum ** 2;
-  while (primeChk <= maxNum) {
-    notPrime[primeChk] = true;
-    primeChk += checkNum;
+// 결과 확인
+//주어진 배열의 요소마다 소수인지 판별해 true 개수만 출력
+let checkNum = 0;
+let result = 0;
+while (checkNum < lengths) {
+  if (primaryCheck(primaryArr[checkNum])) {
+    result++;
   }
   checkNum++;
 }
-
-const result = [];
-let resultChk = 0;
-while (resultChk < lengths) {
-  if (!notPrime[primaryArr[resultChk]]) result.push(primaryArr[resultChk]);
-  resultChk++;
-}
-console.log(result.length);
+console.log(result);
