@@ -1,20 +1,17 @@
-const line = require("fs").readFileSync("/dev/stdin", "utf-8");
-const inputData = line.trim().split("\n");
+const fs = require('fs');
+const filePath = process.platform === "linux" ? "/dev/stdin" : "./samples.txt";
+const input = fs.readFileSync(filePath).toString().trim().split("\n");
+const [TOTALCOURSE, TARGET] = input.shift().split(" ").map(Number);
+let course = input[0].split(" ").map((num,idx)=>[Number(num), idx+1]);
+let halfCourse = course.slice().reverse();
+const COURSE = course.concat(halfCourse);
 
-const [n, k] = inputData[0].split(" ").map((val) => +val);
+let current = 0;
+for(let i =0; i<COURSE.length;i++){
+    current += COURSE[i][0]
 
-let roadInfo = inputData[1].split(" ").map((val, idx) => [+val, idx + 1]);
-let copy = roadInfo.slice().reverse();
-
-let totalRoadInfo = roadInfo.concat(copy);
-
-let curDistance = 0;
-
-for (let i = 0; i < totalRoadInfo.length; i++) {
-  curDistance += totalRoadInfo[i][0];
-
-  if (k < curDistance) {
-    console.log(totalRoadInfo[i][1]);
-    process.exit();
+    if(TARGET<current){
+      console.log(COURSE[i][1]);
+      process.exit();
+    }
   }
-}
