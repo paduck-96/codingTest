@@ -16,13 +16,18 @@ const MERGE = (low, high) => {
   let i = low;
   let j = mid + 1;
   for (let k = low; k <= high; k++) {
+    // j>high 면 이미 정렬된 상태로 순서대로 삽입
+    // arri<arrj 면 순서대로 삽입
     if (j > high || (i <= mid && ARR[i] <= ARR[j])) {
       sorted[k] = ARR[i++];
     } else {
+      // swap
       sorted[k] = ARR[j++];
+      // arrj 뒤로 이동
       answer += BigInt(mid - i + 1);
     }
   }
+  // 정렬 반영
   for (let k = low; k <= high; k++) {
     ARR[k] = sorted[k];
   }
